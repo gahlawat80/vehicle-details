@@ -2,6 +2,7 @@ package com.learn2code.api.vehicle.details.service;
 
 import com.learn2code.api.vehicle.details.dao.VehicleDetailsDAO;
 import com.learn2code.api.vehicle.details.entities.VehicleDetail;
+import com.learn2code.api.vehicle.details.errors.VehicleDetailsNotFound;
 import com.learn2code.api.vehicle.details.errors.VehicleNotSaved;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,6 +11,9 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -63,5 +67,22 @@ class VehicleDetailServiceTest {
         assertEquals(output.getId(),vd.getId());
         assertEquals(output.getBrandName(), vd.getBrandName());
         assertEquals(output.getSeller(),vd.getSeller());
+    }
+
+    @Test
+    @DisplayName("Get All vehicles from database test")
+    public void fetchAllVehicleDetails() throws VehicleDetailsNotFound {
+        List<VehicleDetail> output = Arrays.asList(
+                new VehicleDetail(1,"2022","Toyota","Corolla","L","",21000.0,2500,4.69,"York, PA","Clean and efficient car","T-Auto","321-111-2323"),
+                new VehicleDetail(2,"2022","Honda","Civic","EX","",23000.0,1500,4.69,"York, PA","Clean and efficient car","T-Auto","321-111-2323"),
+                new VehicleDetail(3,"2021","Toyota","Camry","LS","",24500.0,2300,5.69,"Erie, PA","Clean and efficient car","D-Auto","211-222-2323")
+        );
+        Mockito.when(vehicleDetailsDAO.findAll()).thenReturn(output);
+
+        List<VehicleDetail> dbList = vehicleDetailService.fetchAllVehicleDetails();
+
+        assertEquals(dbList.size(),4);
+        assertEquals(dbList.get(0).getBrandName(),"Toyota");
+        assertEquals(dbList.get(1).getBrandName(),"Honda");
     }
 }
