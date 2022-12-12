@@ -85,4 +85,13 @@ class VehicleDetailServiceTest {
         assertEquals(dbList.get(0).getBrandName(),"Toyota");
         assertEquals(dbList.get(1).getBrandName(),"Honda");
     }
+
+    @Test
+    public void testGetVehicleById() throws VehicleDetailsNotFound {
+        VehicleDetail dbVehicleDetail = new VehicleDetail(1,"2022","Toyota","Corolla","L","",21000.0,2500,4.69,"York, PA","Clean and efficient car","T-Auto","321-111-2323");
+        Mockito.when(vehicleDetailsDAO.findById(1)).thenReturn(java.util.Optional.of(dbVehicleDetail));
+        VehicleDetail savedVehicleDetail = vehicleDetailService.getVehicleById(1);
+        assertEquals(1,savedVehicleDetail.getId());
+        assertEquals("Toyota",savedVehicleDetail.getBrandName());
+    }
 }

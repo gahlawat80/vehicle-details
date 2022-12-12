@@ -9,4 +9,5 @@ import java.util.List;
 public interface VehicleDetailService {
     VehicleDetail saveVehicleDetails(VehicleDetail vehicleDetail) throws VehicleNotSaved;
     List<VehicleDetail> fetchAllVehicleDetails() throws VehicleDetailsNotFound;
+    VehicleDetail getVehicleById(int vehicleId) throws VehicleDetailsNotFound;
 }
