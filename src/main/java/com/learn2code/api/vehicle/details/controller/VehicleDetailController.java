@@ -56,4 +56,10 @@ public class VehicleDetailController {
         vehicleDetailService.deleteVehicleDetailsById(vehicleId);
         return new ResponseEntity<>("Deleted vehicle details from DB with ID-"+vehicleId,HttpStatus.OK);
     }
+
+    @PutMapping("/{vehicleId}")
+    public ResponseEntity<VehicleDetail> updateVehicleBYiD(@PathVariable int vehicleId,@RequestBody VehicleDetail vehicleDetail) throws VehicleDetailsNotFound {
+        VehicleDetail savedVehicle = vehicleDetailService.updateVehicleDetails(vehicleId,vehicleDetail);
+        return ResponseEntity.status(HttpStatus.OK).body(savedVehicle);
+    }
 }
