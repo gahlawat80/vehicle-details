@@ -96,9 +96,23 @@ public class VehicleDetailServiceImpl implements VehicleDetailService {
 
     @Override
     public List<VehicleDetail> fetchFilteredVehiclesDetails(String modelYear, String brand, String model, String trim, double price) {
+        List<VehicleDetail> vehicleDetailList = null;
         if(modelYear!="" && brand!="" && model!="" && trim!="" && price>0.0){
-            return vehicleDetailsDAO.filterVehicleBasedOnCriteria(modelYear,brand,model,trim,price);
+            vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria(modelYear,brand,model,trim,price);
+        } else if(brand!="" && model!="" && trim!="" && price>0.0){
+            vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria(brand,model,trim,price);
+        } else if(brand!="" && model!="" && trim!=""){
+            vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria1(brand,model,trim);
+        } else if(brand!="" && model!="" && price>0.0){
+            vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria2(brand,model,price);
+        } else if(brand!="" && price>0.0){
+            vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria2(brand,price);
+        } else if(brand!=""){
+            vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria3(brand);
+        } else if(price>0.0){
+            vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria4(price);
         }
-        return null;
+        return vehicleDetailList;
     }
+
 }
