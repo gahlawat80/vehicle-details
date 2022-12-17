@@ -93,4 +93,12 @@ public class VehicleDetailServiceImpl implements VehicleDetailService {
 
         return vehicleDetailsDAO.save(dbVehcile);
     }
+
+    @Override
+    public List<VehicleDetail> fetchFilteredVehiclesDetails(String modelYear, String brand, String model, String trim, double price) {
+        if(modelYear!="" && brand!="" && model!="" && trim!="" && price>0.0){
+            return vehicleDetailsDAO.filterVehicleBasedOnCriteria(modelYear,brand,model,trim,price);
+        }
+        return null;
+    }
 }
