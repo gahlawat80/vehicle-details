@@ -62,4 +62,10 @@ public class VehicleDetailController {
         VehicleDetail savedVehicle = vehicleDetailService.updateVehicleDetails(vehicleId,vehicleDetail);
         return ResponseEntity.status(HttpStatus.OK).body(savedVehicle);
     }
+
+    @GetMapping("/search")
+    public VehicleDetailsDTO getVehiclesByCrietaria(@RequestParam String modelYear,@RequestParam String brand,@RequestParam String model,@RequestParam String trim,@RequestParam String price){
+        List<VehicleDetail> filteredVehicles = vehicleDetailService.fetchFilteredVehiclesDetails(modelYear,brand,model,trim,Double.parseDouble(price));
+        return new VehicleDetailsDTO(filteredVehicles);
+    }
 }
