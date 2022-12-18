@@ -95,22 +95,34 @@ public class VehicleDetailServiceImpl implements VehicleDetailService {
     }
 
     @Override
-    public List<VehicleDetail> fetchFilteredVehiclesDetails(String modelYear, String brand, String model, String trim, double price) {
+    public List<VehicleDetail> fetchFilteredVehiclesDetails(String modelYear, String brand, String model, String trim, double price) throws VehicleDetailsNotFound {
         List<VehicleDetail> vehicleDetailList = null;
         if(modelYear!="" && brand!="" && model!="" && trim!="" && price>0.0){
             vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria(modelYear,brand,model,trim,price);
+        } else if(modelYear!="" && brand!="" && model!="" && trim!=""){
+            vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria5(modelYear,brand,model,trim);
+        } else if(modelYear!="" && brand!="" && model!="" && price>0.0) {
+            vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria6(modelYear,brand,model,price);
+        } else if(modelYear!="" && brand!="" && price>0.0) {
+            vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria6(modelYear,brand,price);
         } else if(brand!="" && model!="" && trim!="" && price>0.0){
             vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria(brand,model,trim,price);
         } else if(brand!="" && model!="" && trim!=""){
             vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria1(brand,model,trim);
         } else if(brand!="" && model!="" && price>0.0){
             vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria2(brand,model,price);
+        } else if(modelYear!="" && price>0.0){
+            vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria7(modelYear,price);
         } else if(brand!="" && price>0.0){
             vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria2(brand,price);
         } else if(brand!=""){
             vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria3(brand);
         } else if(price>0.0){
             vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria4(price);
+        } else if(modelYear!=""){
+            vehicleDetailList = vehicleDetailsDAO.filterVehicleBasedOnCriteria8(modelYear);
+        } else {
+            vehicleDetailList = fetchAllVehicleDetails();
         }
         return vehicleDetailList;
     }
