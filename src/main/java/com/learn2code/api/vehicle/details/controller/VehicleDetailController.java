@@ -26,7 +26,7 @@ public class VehicleDetailController {
         return "Hello";
     }*/
     @PostMapping
-    public ResponseEntity<VehicleDetail> saveVehicleDetails(@Valid @RequestBody VehicleDetail vehicleDetail, BindingResult result) throws Exception {
+    public ResponseEntity<VehicleDetail> saveVehicleDetails123(@Valid @RequestBody VehicleDetail vehicleDetail, BindingResult result) throws Exception {
         if(result.hasErrors()){
             List<ObjectError> errorList = result.getAllErrors();
             String allErrors = "";
